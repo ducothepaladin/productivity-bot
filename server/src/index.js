@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import connectDb from "./config/db.js";
 
 import authRouter from "./routes/authRoutes.js";
+import personalityRouter from "./routes/personalityRoutes.js";
 
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(cors({origin: clientUrl}));
 
 //route
 app.use("/api/auth", authRouter);
+app.use("/api/personality", personalityRouter);
 
 
 connectDb(dbUrl).then(() => {
