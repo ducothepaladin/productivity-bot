@@ -6,7 +6,7 @@ const BASE_URL = import.meta.env.BASE_URL;
 const { accessToken, setAccessToken, logout } = useAuthStore.getState();
 
 const API = axios.create({
-  baseURL: BASE_URL,
+  baseURL: "http://localhost:5000/api",
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
