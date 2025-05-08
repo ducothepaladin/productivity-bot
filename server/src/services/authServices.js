@@ -1,13 +1,14 @@
 import User from "../model/Users.js";
 import { generateToken } from "../util/token.js";
+import jwt from "jsonwebtoken";
 
 export const loginService = async ({ email, password }) => {
-    const user = await User.find({email});
-    if(!user || user.comparePassword(password)) {
-        throw new Error("Invaild Email or Password");
+    const user = await User.findOne({ email });
+    if (!user || !(await user.comparePassword(password))) {
+        throw new Error("Invalid Email or Password");
     }
     const token = generateToken(user._id);
-    return { user, ...token};
+    return { user, ...token };
 };
 
 export const registerService = async ({ name, email, password }) => {
@@ -25,4 +26,24 @@ export const registerService = async ({ name, email, password }) => {
   return { user, ...token };
 };
 
-export const refreshService = async () => {};
+export const refreshService = async (refreshToken) => {
+  if (!refreshToken) {
+    throw new Error("Refresh token is required");
+  }
+
+  let userId;
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
+    userId = decoded.id;
+  } catch (err) {
+    throw new Error("Invalid or expired refresh token");
+  }
+
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  const newToken = generateToken(user._id);
+  return { user, ...newToken };
+};

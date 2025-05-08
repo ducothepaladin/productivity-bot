@@ -7,7 +7,8 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     name: {type: String, required: true, trim: true},
     email: {type: String, requierd: true, unique: true},
-    password: {type: String, required: true}
+    password: {type: String, required: true},
+    isSurvey: {type: Boolean, default: false}
 }, {timestamps: true});
 
 
@@ -18,7 +19,7 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-userSchema.method.comparePassword = async function (plain) {
+userSchema.methods.comparePassword = async function (plain) {
     return await bcrypt.compare(plain, this.password);
 }
 
