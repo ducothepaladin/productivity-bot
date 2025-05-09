@@ -38,18 +38,19 @@ export default function RegisterForm() {
     resolver: zodResolver(registerSchema),
   });
 
-  const {mutate} = useRegister();
+  const { mutate } = useRegister();
 
   const handleRegister = (data: z.infer<typeof registerSchema>) => {
-
-          const tokenData = mutate({name: data.name, email: data.email, password: data.password});
-          console.log(tokenData)
-  }
+    mutate({ name: data.name, email: data.email, password: data.password });
+  };
 
   return (
     <div className="w-full h-lvh flex justify-center items-center">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleRegister)} className="w-full max-w-md p-8 bg-white shadow-2xl rounded-2xl space-y-6 transform transition-all duration-500 hover:scale-105 hover:shadow-3xl">
+        <form
+          onSubmit={form.handleSubmit(handleRegister)}
+          className="w-full max-w-md p-8 bg-white shadow-2xl rounded-2xl space-y-6 transform transition-all duration-500 hover:scale-105 hover:shadow-3xl"
+        >
           <h1 className="text-center text-4xl font-extrabold text-gray-800 tracking-tight">
             Create Account
           </h1>

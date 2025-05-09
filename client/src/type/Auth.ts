@@ -12,3 +12,8 @@ export type Credential = {
 export type RegisterUser = Credential & {
     name: String,
 }
+
+export type ResponseAuth = {
+    user: BaseUser,
+    accessToken: string,
+}

@@ -1,6 +1,5 @@
 import User from "../model/Users.js";
-import { generateToken } from "../util/token.js";
-import jwt from "jsonwebtoken";
+import { generateToken, verifyRefreshToken } from "../util/token.js";
 
 export const loginService = async ({ email, password }) => {
     const user = await User.findOne({ email });
@@ -8,7 +7,7 @@ export const loginService = async ({ email, password }) => {
         throw new Error("Invalid Email or Password");
     }
     const token = generateToken(user._id);
-    return { user, ...token };
+    return { ...token };
 };
 
 export const registerService = async ({ name, email, password }) => {
@@ -23,7 +22,7 @@ export const registerService = async ({ name, email, password }) => {
     await User.findByIdAndDelete(user._id);
     throw new Error("Can't Generate the Token");
   }
-  return { user, ...token };
+  return { ...token };
 };
 
 export const refreshService = async (refreshToken) => {
@@ -33,7 +32,7 @@ export const refreshService = async (refreshToken) => {
 
   let userId;
   try {
-    const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
+    const decoded = verifyRefreshToken(refreshToken);
     userId = decoded.id;
   } catch (err) {
     throw new Error("Invalid or expired refresh token");
@@ -45,5 +44,5 @@ export const refreshService = async (refreshToken) => {
   }
 
   const newToken = generateToken(user._id);
-  return { user, ...newToken };
+  return { ...newToken };
 };

@@ -1,5 +1,5 @@
 import API from "@/lib/api/apiConfig";
-import type { RegisterUser } from "@/type/Auth";
+import type { RegisterUser, Credential } from "@/type/Auth";
 
 
 export const register = async (user: RegisterUser) => {
@@ -11,3 +11,13 @@ export const register = async (user: RegisterUser) => {
       throw error;
     }
   };
+
+export const login = async (user: Credential) => {
+  try {
+    const response = await API.post("/auth/login", user);
+    return response.data;
+  } catch (error) {
+    console.log("Error during login:", error);
+    throw error;
+  }
+}

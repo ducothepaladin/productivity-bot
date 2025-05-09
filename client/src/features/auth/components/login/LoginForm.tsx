@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { Link } from "react-router-dom";
+import useLogin from "../../hooks/useLogin";
 
 const loginSchema = z
     .object({
@@ -26,10 +27,17 @@ export default function LoginForm() {
         resolver: zodResolver(loginSchema),
     });
 
+    const {mutate} = useLogin();
+
+
+    const handleLogin = (data: z.infer<typeof loginSchema>) => {
+        mutate({...data});
+    }
+
     return (
         <div className="w-full h-lvh flex justify-center items-center">
             <Form {...form}>
-                <form className="w-full max-w-md p-8 bg-white shadow-2xl rounded-2xl space-y-6 transform transition-all duration-500 hover:scale-105 hover:shadow-3xl">
+                <form onSubmit={form.handleSubmit(handleLogin)} className="w-full max-w-md p-8 bg-white shadow-2xl rounded-2xl space-y-6 transform transition-all duration-500 hover:scale-105 hover:shadow-3xl">
                     <h1 className="text-center text-4xl font-extrabold text-gray-800 tracking-tight">
                         Welcome Back
                     </h1>
