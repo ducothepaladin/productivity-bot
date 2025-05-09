@@ -7,7 +7,7 @@ export const loginService = async ({ email, password }) => {
         throw new Error("Invalid Email or Password");
     }
     const token = generateToken(user._id);
-    return { ...token };
+    return { isSurvey: user.isSurvey ,...token };
 };
 
 export const registerService = async ({ name, email, password }) => {

@@ -13,7 +13,11 @@ export type RegisterUser = Credential & {
     name: String,
 }
 
-export type ResponseAuth = {
-    user: BaseUser,
+export type RegisterResponse = {
     accessToken: string,
+}
+
+export type LoginResponse = {
+    accessToken: string,
+    isSurvey: string
 }
