@@ -1,5 +1,5 @@
 import ProtectedRoute from "@/components/common/ProtectedRoute";
-import SurveyPage from "@/features/survey/pages/SurveyPage";
+import SurveyPage from "@/features/user/pages/SurveyPage";
 import UserLayout from "@/layouts/UserLayout";
 
 const userRoute = [

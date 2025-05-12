@@ -19,5 +19,5 @@ export type RegisterResponse = {
 
 export type LoginResponse = {
     accessToken: string,
-    isSurvey: string
+    isSurvey: boolean
 }

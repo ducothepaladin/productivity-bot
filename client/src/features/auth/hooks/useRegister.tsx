@@ -13,7 +13,7 @@ export default function useRegister() {
         mutationFn: (userData: RegisterUser) => register(userData),
         onSuccess: (userData: RegisterResponse) => {
             setAccessToken(userData.accessToken);
-            navigate("/survey");
+            navigate("/user/survey");
         }
     });
 }

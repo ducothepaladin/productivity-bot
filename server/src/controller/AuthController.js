@@ -3,7 +3,7 @@ import { loginService, refreshService, registerService } from "../services/authS
 export const register = async (req, res) => {
     const { name, email, password } = req.body;
     try {
-        const { isSurvey, accessToken, refreshToken } = await registerService({ name, email, password });
+        const { accessToken, refreshToken } = await registerService({ name, email, password });
 
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
@@ -11,7 +11,7 @@ export const register = async (req, res) => {
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
-        res.status(201).json({ accessToken, isSurvey });
+        res.status(201).json({ accessToken });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -20,7 +20,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     const { email, password } = req.body;
     try {
-        const { accessToken, refreshToken } = await loginService({ email, password });
+        const { isSurvey, accessToken, refreshToken } = await loginService({ email, password });
 
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
@@ -28,7 +28,7 @@ export const login = async (req, res) => {
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
-        res.status(200).json({ accessToken });
+        res.status(200).json({ accessToken, isSurvey });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
