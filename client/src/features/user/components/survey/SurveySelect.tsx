@@ -1,5 +1,6 @@
 import { useState } from "react";
 import NextSurveyButton from "./NextSurveyButton";
+import SurveyNote from "./SurveyNote";
 
 export default function SurveySelect() {
   const dummy = ["Morning", "Afternoon", "Evening", "Night Owl"];
@@ -26,10 +27,14 @@ export default function SurveySelect() {
             </div>
           );
         })}
+        <p className="text-sm text-gray-400 text-center">
+          You can select one value
+        </p>
       </div>
-      <div className="mt-6">
+      <div className="my-6">
         <NextSurveyButton next={() => {}} isDisable={!selectValue} />
       </div>
+      <SurveyNote />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import NextSurveyButton from "./NextSurveyButton";
+import SurveyNote from "./SurveyNote";
 
 export default function SurveyMultiSelect() {
   const dummy = ["Morning", "Afternoon", "Evening", "Night Owl"];
@@ -44,9 +45,10 @@ export default function SurveyMultiSelect() {
         })}
         <p className="text-sm text-gray-400 text-center">You can select mutiple value</p>
       </div>
-      <div className="mt-6">
+      <div className="my-6">
         <NextSurveyButton next={() => {}} isDisable={!(selectValue.length > 0)} />
       </div>
+      <SurveyNote />
     </>
   );
 }

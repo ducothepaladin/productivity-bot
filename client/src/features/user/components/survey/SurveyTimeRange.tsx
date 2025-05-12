@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { useRef, useState } from "react";
 import { formatTo12HourTime } from "@/lib/util/format";
 import NextSurveyButton from "./NextSurveyButton";
+import SurveyNote from "./SurveyNote";
 
 type TimeSlot = {
   from: string;
@@ -64,15 +65,16 @@ export default function SurveyTimeRange({
 
 
   const nextSurvey = () => {
-    update({ [dataKey]: [...timeSlots] });
+    update({ [dataKey]: {value: [...timeSlots], note: ""} });
     onNext()
   }
 
   return (
+    <>
     <Dialog open={open} onOpenChange={setOpen}>
       <div className="p-6">
         <div className="mb-6 w-[50rem] p-6 grid grid-cols-3 gap-4">
-          {timeSlots.length > 0 ? (
+          {timeSlots.length > 0 && (
             timeSlots.map((slot, index) => (
               <div
                 key={index}
@@ -82,28 +84,27 @@ export default function SurveyTimeRange({
                   {formatTo12HourTime(slot.from)} -{" "}
                   {formatTo12HourTime(slot.to)}
                 </span>
-                <button
+                <Button
                   onClick={() => handleRemoveTimeSlot(index)}
                   className="absolute top-[-8px] right-[-8px] bg-blue-500 text-white rounded-full p-1 hover:bg-blue-600 transition-colors"
                   aria-label="Remove time slot"
                 >
                   <X size={16} />
-                </button>
+                </Button>
               </div>
             ))
-          ) : (
-            <div className="flex flex-col items-center justify-center text-gray-500">
-              <p className="text-lg font-medium">There is nothing here..</p>
-              <p className="text-sm">Add time slots to get started!</p>
-            </div>
           )}
+          <DialogTrigger asChild>
+            <div
+              className="px-4 py-3 cursor-pointer relative rounded-full flex justify-center items-center shadow-md text-sm bg-white hover:bg-gray-100 transition-transform transform hover:scale-105"
+              aria-label="Add Time Slot"
+            >
+              <span className="font-medium text-sm">+ Add Time Slot</span>
+            </div>
+          </DialogTrigger>
         </div>
         <Separator />
-        <DialogTrigger asChild>
-          <Button variant="outline" className="w-full mt-4">
-            + Add Time Slot
-          </Button>
-        </DialogTrigger>
+        
         <DialogContent className="sm:max-w-[425px] bg-gray-50 rounded-lg shadow-lg transition-transform transform scale-95 hover:scale-100">
           <DialogHeader>
             <DialogTitle className="text-lg font-semibold text-gray-800">
@@ -151,7 +152,11 @@ export default function SurveyTimeRange({
           </DialogFooter>
         </DialogContent>
       </div>
-      <NextSurveyButton isDisable={!(timeSlots.length > 0)} next={nextSurvey} />
     </Dialog>
+    <div className="my-6">
+        <NextSurveyButton isDisable={!(timeSlots.length > 0)} next={nextSurvey} />
+    </div>
+    <SurveyNote />
+    </>
   );
 }

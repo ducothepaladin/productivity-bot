@@ -1,5 +1,8 @@
+import { RenderSurveyForm } from "./SurveyComponent";
 import SurveyMultiSelect from "./SurveyMultiSelect";
 import SurveySelect from "./SurveySelect";
+import SurveyTag from "./SurveyTag";
+import SurveyText from "./SurveyText";
 import SurveyTimeRange from "./SurveyTimeRange";
 import type { Survey } from "@/type/Survey";
 
@@ -33,9 +36,12 @@ export default function SurveyField({onNext, data, total, current, updateResult}
             {data.description}
           </p>
         </div>
+        <RenderSurveyForm type={data.type} />
         {/* <SurveyTimeRange onNext={onNext} update={updateResult} dataKey={data.key} /> */}
         {/* <SurveySelect /> */}
-        <SurveyMultiSelect />
+        {/* <SurveyMultiSelect /> */}
+        {/* <SurveyText /> */}
+        {/* <SurveyTag /> */}
       </div>
     </div>
   );

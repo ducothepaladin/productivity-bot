@@ -2,14 +2,14 @@ import { useCallback, useEffect, useState } from "react";
 import SurveyField from "./SurveyField";
 import SurveyNav from "./SurveyNav";
 import { survey } from "@/assets/data/survey";
-import type { Survey } from "@/type/Survey";
+import type { SurveyResult, Survey } from "@/type/Survey";
 
 export default function SurveySection() {
   const [surveyIndex, setSurveyIndex] = useState<number>(0);
   const [currentSurvey, setCurrentSurvery] = useState<Survey>(
     survey[surveyIndex]
   );
-  const [surveyResult, setSurveyResult] = useState({});
+  const [surveyResult, setSurveyResult] = useState<SurveyResult>();
 
   useEffect(() => {
     setCurrentSurvery(survey[surveyIndex]);
@@ -28,9 +28,9 @@ export default function SurveySection() {
   }, [survey.length]);
 
   const updateSurveyResult = useCallback(
-    (update: any) => {
+    (update: Partial<SurveyResult>) => {
       setSurveyResult((prev) => {
-        return { ...prev, update };
+        return prev ? { ...prev, ...update } : { ...update } as SurveyResult;
       });
     },
     [survey.length]

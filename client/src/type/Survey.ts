@@ -4,7 +4,7 @@
 export type Survey = {
     key: string,
     question: string,
-    type: string,
+    type: "select" | "multi-select" | "tag-input" | "time-multi-range" | "textarea",
     values: any,
     description: string
 }

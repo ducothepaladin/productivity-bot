@@ -32,14 +32,14 @@ export const survey: Survey[] = [
   {
     "key": "focusSpanMin",
     "question": "How long can you usually stay focused on a single task?",
-    "type": "slider",
+    "type": "select",
     "values": ["<30 minutes", "30–60 minutes", "1–2 hours", ">2 hours"],
     "description": "Estimate how long you can stay focused without distraction."
   },
   {
     "key": "contextSwitchCostMin",
     "question": "How long does it take you to get back into focus after switching tasks?",
-    "type": "slider",
+    "type": "select",
     "values": ["Almost instantly", "5–10 minutes", "10–20 minutes", "Over 20 minutes"],
     "description": "Tell us how long it takes you to regain concentration after a task switch."
   },
@@ -137,14 +137,14 @@ export const survey: Survey[] = [
   {
     "key": "distractionRecoveryTimeMin",
     "question": "After a distraction, how long does it usually take to regain focus?",
-    "type": "slider",
+    "type": "select",
     "values": ["Almost instantly", "5–10 minutes", "10–20 minutes", "Over 20 minutes"],
     "description": "Estimate the number of minutes it takes to return to deep work after being distracted."
   },
   {
     "key": "dailyHabits",
     "question": "Which of these habits do you currently follow daily?",
-    "type": "checkbox",
+    "type": "multi-select",
     "values": ["Exercise", "Journaling", "Reading", "Meditation", "Planning", "Healthy eating", "Digital detox"],
     "description": "Check the habits you consistently maintain every day."
   },
