@@ -14,9 +14,11 @@ const API = axios.create({
 API.interceptors.request.use(
   (config) => {
     const token = getAccessToken();
+    console.log(token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    console.log("Request Headers:", config.headers);
     return config;
   },
   (error) => Promise.reject(error)

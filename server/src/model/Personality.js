@@ -49,7 +49,7 @@ const PersonalitySchema = new Schema(
     dailyHabits: NoteFieldSchema,
 
     // Summary
-    tags: [{ type: String }],
+    tags: NoteFieldSchema,
     insight: { type: String },
   },
   { timestamps: true }

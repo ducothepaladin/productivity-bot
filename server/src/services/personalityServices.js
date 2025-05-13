@@ -71,3 +71,13 @@ export const initialSetupService = async ({ survey, userId }) => {
 
   return data;
 };
+
+
+export const createInitialPersonalityService = async ({survey, userId}) => {
+
+  const personality = await Personality.create({
+    ...survey,
+    userId
+  });
+  return personality;
+}
