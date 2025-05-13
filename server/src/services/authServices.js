@@ -2,12 +2,12 @@ import User from "../model/Users.js";
 import { generateToken, verifyRefreshToken } from "../util/token.js";
 
 export const loginService = async ({ email, password }) => {
-    const user = await User.findOne({email});
-    if(!user || !(await user.comparePassword(password))) {
-        throw new Error("Invaild Email or Password");
+    const user = await User.findOne({ email });
+    if (!user || !(await user.comparePassword(password))) {
+        throw new Error("Invalid Email or Password");
     }
     const token = generateToken(user._id);
-    return { user, ...token};
+    return { isSurvey: user.isSurvey ,...token };
 };
 
 export const registerService = async ({ name, email, password }) => {
@@ -22,27 +22,27 @@ export const registerService = async ({ name, email, password }) => {
     await User.findByIdAndDelete(user._id);
     throw new Error("Can't Generate the Token");
   }
-  return { user, ...token };
+  return { ...token };
 };
 
-export const refreshService = async (token) => {
-
-  if(!token) throw new Error('No refresh token provided')
-
-
-  const payload = verifyRefreshToken(token);
-  
-  if(!payload) {
-    throw new Error('Invailid Token');
+export const refreshService = async (refreshToken) => {
+  if (!refreshToken) {
+    throw new Error("Refresh token is required");
   }
 
-  const user = await User.findById(payload.id);
-  if(!user) {
-    throw new Error('user not found');
+  let userId;
+  try {
+    const decoded = verifyRefreshToken(refreshToken);
+    userId = decoded.id;
+  } catch (err) {
+    throw new Error("Invalid or expired refresh token");
   }
 
-  const {accessToken} = generateToken(user._id);
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new Error("User not found");
+  }
 
-  return {accessToken};
-
+  const newToken = generateToken(user._id);
+  return { ...newToken };
 };

@@ -5,6 +5,7 @@ import connectDb from "./config/db.js";
 import cookiePhaser from "cookie-parser";
 
 import authRouter from "./routes/authRoutes.js";
+import personalityRouter from "./routes/personalityRoutes.js";
 
 
 const app = express();
@@ -17,11 +18,13 @@ const dbUrl = process.env.DATABASE_URL;
 
 //middlewares
 app.use(express.json());
-app.use(cors({origin: clientUrl}));
+app.use(cors({origin: [clientUrl], credentials: true}));
+
 app.use(cookiePhaser());
 
 //route
 app.use("/api/auth", authRouter);
+app.use("/api/personality", personalityRouter);
 
 
 connectDb(dbUrl).then(() => {
