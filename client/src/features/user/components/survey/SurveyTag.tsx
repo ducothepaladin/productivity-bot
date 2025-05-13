@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import NextSurveyButton from "./NextSurveyButton";
-import SurveyNote from "./SurveyNote";
+import type { SurveyComponentProps } from "@/type/Survey";
 
-export default function SurveyTag() {
+export default function SurveyTag({onNext, note, update, updateNote, dataKey}:SurveyComponentProps) {
     const [tags, setTags] = useState<string[]>([]);
     const [inputValue, setInputValue] = useState("");
 
@@ -18,6 +18,14 @@ export default function SurveyTag() {
     const handleRemoveTag = (tagToRemove: string) => {
         setTags(tags.filter((tag) => tag !== tagToRemove));
     };
+
+
+      const nextSurvey = useCallback(() => {
+                update({[dataKey]: {value: [...tags], note}});
+                setTags([]);
+                updateNote("");
+                onNext();
+        }, [update, dataKey, note, updateNote, tags, onNext])
 
     return (
         <>
@@ -56,9 +64,8 @@ export default function SurveyTag() {
             </div>
         </div>
             <div className="my-6">
-                <NextSurveyButton next={() => {}} isDisable={true} />
+                <NextSurveyButton next={nextSurvey} isDisable={!(tags.length > 0)} />
             </div>
-            <SurveyNote />
         </>
 
     );

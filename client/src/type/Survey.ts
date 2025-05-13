@@ -15,12 +15,6 @@ type NoteField<T = any> = {
   note?: string;
 };
 
-type DailyHabit = {
-  name: string;
-  value: boolean;
-  note?: string;
-};
-
 export type SurveyResult = {
 
   // Core temporal profile
@@ -31,7 +25,7 @@ export type SurveyResult = {
   // Energy and focus
   energyCycle: NoteField<string>;
   focusSpanMin: NoteField<number>;
-  contextSwitchCostMin: NoteField<number>;
+  contextSwitchCostMin: NoteField<string>;
   taskSwitchingTendency: NoteField<string>;
 
   // Work and productivity style
@@ -51,12 +45,22 @@ export type SurveyResult = {
   stressTolerance: NoteField<string>;
   taskOverloadReaction: NoteField<string>;
   procrastinationTriggers: NoteField<string[]>;
-  distractionRecoveryTimeMin: NoteField<number>;
+  distractionRecoveryTimeMin: NoteField<string>;
 
   // Daily behavior
-  dailyHabits: DailyHabit[];
+  dailyHabits: NoteField<string[]>;
 
   // Summary
   tags?: string[];
   insight?: string;
 };
+
+
+export type SurveyComponentProps = {
+  onNext: () => void;
+  dataKey: string;
+  update: (data: any) => void;
+  value: string[];
+  updateNote: any;
+  note: string;
+}

@@ -20,7 +20,7 @@ export default function SurveySection() {
   }, [surveyResult]);
 
   const nextSurveyHandle = useCallback(() => {
-    setSurveyIndex((prev) => (prev + 1) % survey.length);
+    setSurveyIndex((prev) => (prev < survey.length - 1 ? prev + 1 : prev));
   }, [survey.length]);
 
   const backSurveyHandle = useCallback(() => {

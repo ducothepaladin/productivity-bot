@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import NextSurveyButton from "./NextSurveyButton";
-import SurveyNote from "./SurveyNote";
+import type { SurveyComponentProps } from "@/type/Survey";
 
-export default function SurveyText() {
+export default function SurveyText({onNext, update, updateNote, dataKey, note}:SurveyComponentProps) {
     const [text, setText] = useState("");
     const maxLength = 300;
 
     const progressPercentage = (text.length / maxLength) * 100;
+
+
+      const nextSurvey = useCallback(() => {
+                update({[dataKey]: {value: text, note}});
+                setText("");
+                updateNote("");
+                onNext();
+        }, [update, dataKey, note, updateNote, onNext, text])
 
     return (
         <>
@@ -37,9 +45,8 @@ export default function SurveyText() {
                 </div>
             </div>
             <div className="my-6 flex justify-end">
-                <NextSurveyButton next={() => {}} isDisable={text.length === 0} />
+                <NextSurveyButton next={nextSurvey} isDisable={text.length === 0} />
             </div>
-            <SurveyNote />
         </>
     );
 }

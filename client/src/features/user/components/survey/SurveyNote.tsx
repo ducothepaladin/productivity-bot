@@ -1,9 +1,9 @@
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
 
-export default function SurveyNote() {
-  const [text, setText] = useState("");
+export default function SurveyNote({update, note}: {update: any, note: string}) {
   const maxLength = 300;
+
+
 
   return (
     <>
@@ -18,12 +18,12 @@ export default function SurveyNote() {
           id="survey-text"
           className="w-[30rem] border-gray-300 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Write your answer here..."
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+          value={note}
+          onChange={(e) => update(e.target.value)}
           maxLength={maxLength}
         />
         <div className="text-sm text-gray-500">
-          {text.length}/{maxLength} characters
+          {note.length}/{maxLength} characters
         </div>
       </div>
     </>

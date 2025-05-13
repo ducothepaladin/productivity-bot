@@ -10,12 +10,6 @@ const NoteFieldSchema = new Schema(
   { _id: false }
 );
 
-const DailyHabitsSchema = new Schema({
-  name: { type: String, required: true },
-  value: { type: Boolean, required: true },
-  note: { type: String },
-}, { _id: false });
-
 const PersonalitySchema = new Schema(
   {
     userId: { type: String, required: true },
@@ -52,7 +46,7 @@ const PersonalitySchema = new Schema(
     distractionRecoveryTimeMin: NoteFieldSchema,
 
     // Daily behavior
-    dailyHabits: [DailyHabitsSchema],
+    dailyHabits: NoteFieldSchema,
 
     // Summary
     tags: [{ type: String }],

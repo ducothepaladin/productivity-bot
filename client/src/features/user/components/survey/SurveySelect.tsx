@@ -1,22 +1,30 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import NextSurveyButton from "./NextSurveyButton";
-import SurveyNote from "./SurveyNote";
+import type { SurveyComponentProps } from "@/type/Survey";
 
-export default function SurveySelect() {
-  const dummy = ["Morning", "Afternoon", "Evening", "Night Owl"];
+export default function SurveySelect({onNext, value, update, note, updateNote, dataKey}:SurveyComponentProps) {
   const [selectValue, setSelectValue] = useState("");
+
+
+
+  const nextSurvey = useCallback(() => {
+          update({[dataKey]: {value: selectValue, note}});
+          setSelectValue("");
+          updateNote("");
+          onNext();
+  }, [update, dataKey, note, updateNote, onNext, selectValue])
 
   return (
     <>
       <div className="flex justify-center flex-wrap w-[28rem] items-center gap-6">
-        {dummy.map((item, i) => {
+        {value.map((item, i) => {
           const isSelect = selectValue === item;
 
           return (
             <div
               key={i}
               onClick={() => setSelectValue(item)}
-              className={`w-36 px-4 py-3 rounded-full border shadow-lg text-center cursor-pointer transition-all transform duration-300
+              className={`w-36 px-4 py-3 text-sm rounded-full border shadow-lg text-center cursor-pointer transition-all transform duration-300
                 ${
                   isSelect
                     ? "bg-blue-600 text-white border-blue-400 hover:bg-blue-500 scale-105"
@@ -27,14 +35,14 @@ export default function SurveySelect() {
             </div>
           );
         })}
-        <p className="text-sm text-gray-400 text-center">
+        
+      </div>
+      <p className="text-sm my-6 text-gray-400 text-center">
           You can select one value
         </p>
+      <div className="mb-6">
+        <NextSurveyButton next={nextSurvey} isDisable={!selectValue} />
       </div>
-      <div className="my-6">
-        <NextSurveyButton next={() => {}} isDisable={!selectValue} />
-      </div>
-      <SurveyNote />
     </>
   );
 }
