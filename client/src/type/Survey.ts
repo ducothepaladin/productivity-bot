@@ -63,4 +63,5 @@ export type SurveyComponentProps = {
   value: string[];
   updateNote: any;
   note: string;
+  current: any;
 }

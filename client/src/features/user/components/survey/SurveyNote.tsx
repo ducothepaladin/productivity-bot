@@ -1,6 +1,6 @@
 import { Textarea } from "@/components/ui/textarea";
 
-export default function SurveyNote({update, note}: {update: any, note: string}) {
+export default function SurveyNote({update, note, current}: {update: any, note: string, current: any}) {
   const maxLength = 300;
 
 
@@ -19,6 +19,7 @@ export default function SurveyNote({update, note}: {update: any, note: string}) 
           className="w-[30rem] border-gray-300 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Write your answer here..."
           value={note}
+          defaultValue={current? current.note: ""}
           onChange={(e) => update(e.target.value)}
           maxLength={maxLength}
         />

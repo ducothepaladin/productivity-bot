@@ -3,8 +3,8 @@ import { Textarea } from "@/components/ui/textarea";
 import NextSurveyButton from "./NextSurveyButton";
 import type { SurveyComponentProps } from "@/type/Survey";
 
-export default function SurveyText({onNext, update, updateNote, dataKey, note}:SurveyComponentProps) {
-    const [text, setText] = useState("");
+export default function SurveyText({onNext, update, updateNote, dataKey, note, current}:SurveyComponentProps) {
+    const [text, setText] = useState(current? current.value: "");
     const maxLength = 300;
 
     const progressPercentage = (text.length / maxLength) * 100;

@@ -17,17 +17,22 @@ export default function SurveySection() {
     setCurrentSurvery(survey[surveyIndex]);
   }, [surveyIndex]);
 
+
+  useEffect(() => {
+    console.log(surveyResult)
+  },[surveyResult]);
+
   const nextSurveyHandle = useCallback(() => {
     setSurveyIndex((prev) => (prev < survey.length - 1 ? prev + 1 : prev));
     console.log(survey.length - 1, surveyIndex);
     if (survey.length - 1 === surveyIndex) {
       mutate({ survey: surveyResult! });
     }
-  }, [survey.length, surveyIndex]);
+  }, [survey.length, surveyIndex, surveyResult]);
 
   const backSurveyHandle = useCallback(() => {
     setSurveyIndex((prev) => (prev > 0 ? prev - 1 : 0));
-  }, [survey.length]);
+  }, [survey.length, surveyIndex, surveyResult]);
 
   const updateSurveyResult = useCallback(
     (update: Partial<SurveyResult>) => {
@@ -35,7 +40,7 @@ export default function SurveySection() {
         return prev ? { ...prev, ...update } : ({ ...update } as SurveyResult);
       });
     },
-    [survey.length]
+    [survey.length, surveyResult, surveyIndex]
   );
 
   return (
@@ -47,6 +52,7 @@ export default function SurveySection() {
         current={surveyIndex + 1}
         onNext={nextSurveyHandle}
         data={currentSurvey}
+        result={surveyResult}
       />
     </section>
   );

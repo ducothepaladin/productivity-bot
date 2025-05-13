@@ -28,8 +28,9 @@ export default function SurveyTimeRange({
   updateNote,
   note,
   dataKey,
+  current
 }: SurveyComponentProps) {
-  const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
+  const [timeSlots, setTimeSlots] = useState<TimeSlot[]>(current? [...current.value]: []);
   const [isPossibleTimeSlot, setIsPossibleTimeSlot] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const fromRef = useRef<HTMLInputElement>(null);

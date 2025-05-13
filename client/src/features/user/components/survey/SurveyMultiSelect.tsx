@@ -2,30 +2,33 @@ import { useState, useCallback } from "react";
 import NextSurveyButton from "./NextSurveyButton";
 import type { SurveyComponentProps } from "@/type/Survey";
 
-export default function SurveyMultiSelect({onNext, value, dataKey, update, updateNote, note}:SurveyComponentProps) {
-
-  const [selectValue, setSelectValue] = useState<string[]>([]);
-
-
-
+export default function SurveyMultiSelect({
+  onNext,
+  value,
+  dataKey,
+  update,
+  updateNote,
+  note,
+  current,
+}: SurveyComponentProps) {
+  const [selectValue, setSelectValue] = useState<string[]>(current? [...current.value]: []);
 
   const handleMultiSelect = (value: string) => {
-
-    setSelectValue((prev) =>  {
-        const exist = prev.find((pr) => pr === value);
-        if (exist) {
-            return prev.filter((item) => item !== exist);
-        }
-        return [...prev, value];
+    setSelectValue((prev) => {
+      const exist = prev.find((pr) => pr === value);
+      if (exist) {
+        return prev.filter((item) => item !== exist);
+      }
+      return [...prev, value];
     });
-  }
+  };
 
   const nextSurvey = useCallback(() => {
-            update({[dataKey]: {value: [...selectValue], note}});
-            setSelectValue([]);
-            updateNote("");
-            onNext();
-    }, [update, dataKey, note, updateNote, onNext, selectValue])
+    update({ [dataKey]: { value: [...selectValue], note } });
+    setSelectValue([]);
+    updateNote("");
+    onNext();
+  }, [update, dataKey, note, updateNote, onNext, selectValue]);
 
   return (
     <>
@@ -49,9 +52,14 @@ export default function SurveyMultiSelect({onNext, value, dataKey, update, updat
           );
         })}
       </div>
-        <p className="text-sm mt-6 text-gray-400 text-center">You can select mutiple value</p>
+      <p className="text-sm mt-6 text-gray-400 text-center">
+        You can select mutiple value
+      </p>
       <div className="my-6">
-        <NextSurveyButton next={nextSurvey} isDisable={!(selectValue.length > 0)} />
+        <NextSurveyButton
+          next={nextSurvey}
+          isDisable={!(selectValue.length > 0)}
+        />
       </div>
     </>
   );

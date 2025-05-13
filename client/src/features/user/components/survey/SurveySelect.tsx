@@ -2,8 +2,8 @@ import { useCallback, useState } from "react";
 import NextSurveyButton from "./NextSurveyButton";
 import type { SurveyComponentProps } from "@/type/Survey";
 
-export default function SurveySelect({onNext, value, update, note, updateNote, dataKey}:SurveyComponentProps) {
-  const [selectValue, setSelectValue] = useState("");
+export default function SurveySelect({onNext, value, update, note, updateNote, dataKey, current}:SurveyComponentProps) {
+  const [selectValue, setSelectValue] = useState(current? current.value: "");
 
 
 

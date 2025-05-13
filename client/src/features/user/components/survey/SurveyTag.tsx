@@ -4,8 +4,8 @@ import { useState, useCallback } from "react";
 import NextSurveyButton from "./NextSurveyButton";
 import type { SurveyComponentProps } from "@/type/Survey";
 
-export default function SurveyTag({onNext, note, update, updateNote, dataKey}:SurveyComponentProps) {
-    const [tags, setTags] = useState<string[]>([]);
+export default function SurveyTag({onNext, note, update, updateNote, dataKey, current}:SurveyComponentProps) {
+    const [tags, setTags] = useState<string[]>(current.value? [...current.value]: []);
     const [inputValue, setInputValue] = useState("");
 
     const handleAddTag = () => {

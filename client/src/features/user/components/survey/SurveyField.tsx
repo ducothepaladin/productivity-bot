@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { RenderSurveyForm } from "./SurveyComponent";
-import type { Survey } from "@/type/Survey";
+import type { Survey, SurveyResult } from "@/type/Survey";
 import SurveyNote from "./SurveyNote";
 
 type SurveyFieldProps = {
@@ -8,6 +8,7 @@ type SurveyFieldProps = {
   data: Survey;
   total: number;
   current: number;
+  result: SurveyResult | undefined;
   updateResult: (update: any) => void;
 };
 
@@ -16,10 +17,16 @@ export default function SurveyField({
   data,
   total,
   current,
+  result,
   updateResult,
 }: SurveyFieldProps) {
 
-  const [note, setNote] = useState<string>();
+  const key = data.key as keyof SurveyResult;
+  const currentResult = result? result[key]: null;
+
+  const [note, setNote] = useState<string>("");
+
+  
 
 
   return (
@@ -37,6 +44,7 @@ export default function SurveyField({
           </p>
         </div>
         <RenderSurveyForm
+          current={currentResult}
           type={data.type}
           onNext={onNext}
           value={data.values}
@@ -45,7 +53,7 @@ export default function SurveyField({
           note={note}
           updateNote={setNote}
         />
-        <SurveyNote update={setNote} note={note || ""} />
+        <SurveyNote current={currentResult} update={setNote} note={note || ""} />
       </div>
     </div>
   );
