@@ -19,6 +19,7 @@ const dbUrl = process.env.DATABASE_URL;
 //middlewares
 app.use(express.json());
 app.use(cors({origin: [clientUrl], credentials: true}));
+
 app.use(cookiePhaser());
 
 //route
