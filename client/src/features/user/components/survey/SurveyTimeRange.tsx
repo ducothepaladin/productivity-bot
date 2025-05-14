@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { formatTo12HourTime } from "@/lib/util/format";
 import NextSurveyButton from "./NextSurveyButton";
 import type { SurveyComponentProps } from "@/type/Survey";
@@ -30,11 +30,18 @@ export default function SurveyTimeRange({
   dataKey,
   current
 }: SurveyComponentProps) {
-  const [timeSlots, setTimeSlots] = useState<TimeSlot[]>(current? [...current.value]: []);
+  const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
   const [isPossibleTimeSlot, setIsPossibleTimeSlot] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const fromRef = useRef<HTMLInputElement>(null);
   const toRef = useRef<HTMLInputElement>(null);
+
+
+  useEffect(() => {
+    if(current && Object.keys(current).length > 0 && Array.isArray(current.value)) {
+      setTimeSlots([...current.value]);
+    }
+  },[current])
 
   const compareTimeSlot = () => {
     const from = fromRef.current?.value;
