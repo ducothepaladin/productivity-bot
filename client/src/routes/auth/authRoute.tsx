@@ -17,7 +17,7 @@ const authRoute = [
         element: <LoginPage />,
       },
       {
-        path: "/auth/register",
+        path: "register",
         element: <RegisterPage />,
       },
     ],

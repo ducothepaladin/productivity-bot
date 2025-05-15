@@ -1,5 +1,7 @@
 import ProtectedRoute from "@/components/common/ProtectedRoute";
+import DashBoardPage from "@/features/user/pages/DashBoardPage";
 import SurveyPage from "@/features/user/pages/SurveyPage";
+import TasksPage from "@/features/user/pages/TasksPage";
 import UserLayout from "@/layouts/UserLayout";
 
 const userRoute = [
@@ -12,10 +14,18 @@ const userRoute = [
     ),
     children: [
       {
-        path: "/user/survey",
-        element: <SurveyPage />,
+        index: true,
+        element: <DashBoardPage />
       },
+      {
+        path: "tasks",
+        element: <TasksPage />
+      }
     ],
+  },
+  {
+    path: "/user/survey",
+    element: <SurveyPage />,
   },
 ];
 
