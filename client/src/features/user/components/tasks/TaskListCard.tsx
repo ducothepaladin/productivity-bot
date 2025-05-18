@@ -31,8 +31,8 @@ export default function TaskListCard({task}: {task: Task}) {
 
   return (
     <Card className="rounded-xl border shadow-sm">
-      <CardHeader className="h-32">
-        <div className="flex justify-between items-center mb-2">
+      <CardHeader className="h-32 flex flex-col justify-start">
+        <div className="flex w-full justify-between items-center mb-2">
           <span className="text-xs px-2 py-1 bg-muted rounded-md text-muted-foreground font-mono">
             T-123
           </span>

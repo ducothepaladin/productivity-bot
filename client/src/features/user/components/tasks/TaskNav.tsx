@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Calendar1, Plus, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function TaskNav() {
   return (
@@ -13,10 +14,12 @@ export default function TaskNav() {
           <Plus />
           <span>Add New Task</span>
         </Button>
+        <Link to="/user/tasks/generate">
         <Button className="bg-blue-500 hover:bg-blue-400">
           <Sparkles />
           <span>AI Generate</span>
         </Button>
+        </Link>
       </div>
     </div>
   );

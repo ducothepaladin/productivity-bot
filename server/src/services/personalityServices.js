@@ -1,5 +1,6 @@
 import { generate } from "./aiServices.js";
 import Personality from "../model/Personality.js";
+import User from "../model/Users.js";
 
 export const initialSetupService = async ({ survey, userId }) => {
   const messages1 = [
@@ -79,5 +80,8 @@ export const createInitialPersonalityService = async ({survey, userId}) => {
     ...survey,
     userId
   });
-  return personality;
+
+  const { isSurvey } = await User.findByIdAndUpdate(userId, {isSurvey: true}, {new: true, runValidators: true});
+
+  return {personality, isSurvey};
 }

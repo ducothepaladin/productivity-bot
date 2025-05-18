@@ -12,7 +12,7 @@ export default function SurveyText({
   current,
 }: SurveyComponentProps) {
   const [text, setText] = useState("");
-  const maxLength = 300;
+  const maxLength = 2000;
 
   const progressPercentage = (text.length / maxLength) * 100;
 
@@ -24,7 +24,7 @@ export default function SurveyText({
     },[current])
 
   const nextSurvey = useCallback(() => {
-    update({ [dataKey]: { value: text, note } });
+    update({ [dataKey]: { value: text } });
     setText("");
     updateNote("");
     onNext();

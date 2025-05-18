@@ -46,7 +46,7 @@ export default function SurveyField({
           note={note}
           updateNote={setNote}
         />
-        <SurveyNote current={currentResult} update={setNote} note={note || ""} />
+        {currentSurvey.type !== "tag-input" && <SurveyNote current={currentResult} update={setNote} note={note || ""} />}
       </div>
     </div>
   );

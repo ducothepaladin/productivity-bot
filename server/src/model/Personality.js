@@ -36,8 +36,8 @@ const PersonalitySchema = new Schema(
     preferredTaskType: NoteFieldSchema,
     dislikedTaskType: NoteFieldSchema,
     toolsUsed: NoteFieldSchema,
-    shortTermGoals: NoteFieldSchema,
-    longTermGoals: NoteFieldSchema,
+    shortTermGoals: {value: {type: String}},
+    longTermGoals: {value: {type: String}},
 
     // Behavioral signals
     stressTolerance: NoteFieldSchema,
@@ -49,8 +49,8 @@ const PersonalitySchema = new Schema(
     dailyHabits: NoteFieldSchema,
 
     // Summary
-    tags: NoteFieldSchema,
-    insight: { type: String },
+    tags: {value: {type: String}},
+    insight: {value: {type: String}},
   },
   { timestamps: true }
 );
