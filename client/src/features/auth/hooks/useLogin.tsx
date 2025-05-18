@@ -14,7 +14,6 @@ export default function useLogin() {
     mutationFn: (data: Credential) => login(data),
     onSuccess: (userData: LoginResponse) => {
       setAccessToken(userData.accessToken);
-      console.log(userData);
       setSurvey(userData.isSurvey);
 
       if(!userData.isSurvey) {

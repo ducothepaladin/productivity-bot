@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import NextSurveyButton from "./NextSurveyButton";
 import type { SurveyComponentProps } from "@/type/Survey";
 
@@ -11,7 +11,14 @@ export default function SurveyMultiSelect({
   note,
   current,
 }: SurveyComponentProps) {
-  const [selectValue, setSelectValue] = useState<string[]>(current? [...current.value]: []);
+  const [selectValue, setSelectValue] = useState<string[]>([]);
+
+
+  useEffect(() => {
+    if(current && Object.keys(current).length > 0 && Array.isArray(current.value)) {
+      setSelectValue([...current.value])
+    }
+  },[current])
 
   const handleMultiSelect = (value: string) => {
     setSelectValue((prev) => {

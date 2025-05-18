@@ -1,30 +1,23 @@
 import { useState } from "react";
 import { RenderSurveyForm } from "./SurveyComponent";
-import type { Survey, SurveyResult } from "@/type/Survey";
 import SurveyNote from "./SurveyNote";
+import useSurveyStore from "@/store/surveyStore";
 
 type SurveyFieldProps = {
   onNext: () => void;
-  data: Survey;
   total: number;
   current: number;
-  result: SurveyResult | undefined;
-  updateResult: (update: any) => void;
 };
 
 export default function SurveyField({
   onNext,
-  data,
   total,
   current,
-  result,
-  updateResult,
 }: SurveyFieldProps) {
 
-  const key = data.key as keyof SurveyResult;
-  const currentResult = result? result[key]: null;
+  const {currentSurvey, currentResult, setSurveyResult} = useSurveyStore();
+  const [note, setNote] = useState<string>(currentResult? currentResult.value: "");
 
-  const [note, setNote] = useState<string>("");
 
   
 
@@ -37,23 +30,23 @@ export default function SurveyField({
             {current}/{total}
           </p>
           <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
-            {data.question}
+            {currentSurvey.question}
           </h2>
           <p className="text-center text-gray-600 mb-6 leading-relaxed">
-            {data.description}
+            {currentSurvey.description}
           </p>
         </div>
         <RenderSurveyForm
           current={currentResult}
-          type={data.type}
+          type={currentSurvey.type}
           onNext={onNext}
-          value={data.values}
-          update={updateResult}
-          dataKey={data.key}
+          value={currentSurvey.values}
+          update={setSurveyResult}
+          dataKey={currentSurvey.key}
           note={note}
           updateNote={setNote}
         />
-        <SurveyNote current={currentResult} update={setNote} note={note || ""} />
+        {currentSurvey.type !== "tag-input" && <SurveyNote current={currentResult} update={setNote} note={note || ""} />}
       </div>
     </div>
   );

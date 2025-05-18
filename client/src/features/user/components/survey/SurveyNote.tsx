@@ -1,9 +1,14 @@
 import { Textarea } from "@/components/ui/textarea";
+import { useEffect } from "react";
 
 export default function SurveyNote({update, note, current}: {update: any, note: string, current: any}) {
   const maxLength = 300;
 
-
+  useEffect(() => {
+      if(current && Object.keys(current).length > 0) {
+        update(current.note)
+      }
+    },[current])
 
   return (
     <>
@@ -19,7 +24,6 @@ export default function SurveyNote({update, note, current}: {update: any, note: 
           className="w-[30rem] border-gray-300 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Write your answer here..."
           value={note}
-          defaultValue={current? current.note: ""}
           onChange={(e) => update(e.target.value)}
           maxLength={maxLength}
         />

@@ -16,7 +16,7 @@ export const initialSetup = async (req, res) => {
 export const createInitialPersonality = async (req, res) => {
     const {survey} = req.body;
     try {
-        const data = await createInitialPersonalityService({survey, userId: req.user._id});
+        const data = await createInitialPersonalityService({survey, userId: "681d95ec01f1fdb994b48c03"});
 
         res.status(200).json(data);
     } catch(error) {

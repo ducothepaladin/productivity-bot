@@ -1,14 +1,28 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import NextSurveyButton from "./NextSurveyButton";
 import type { SurveyComponentProps } from "@/type/Survey";
+import useSurveyStore from "@/store/surveyStore";
 
 export default function SurveySelect({onNext, value, update, note, updateNote, dataKey, current}:SurveyComponentProps) {
-  const [selectValue, setSelectValue] = useState(current? current.value: "");
+
+
+  const { currentSurvey, setSurveyResult} = useSurveyStore();
+
+
+  const [selectValue, setSelectValue] = useState("");
+
+
+  useEffect(() => {
+      if(current && Object.keys(current).length > 0) {
+        setSelectValue(current.value)
+      }
+    },[current])
 
 
 
   const nextSurvey = useCallback(() => {
           update({[dataKey]: {value: selectValue, note}});
+          setSurveyResult({[currentSurvey.key]: {value: selectValue, note} })
           setSelectValue("");
           updateNote("");
           onNext();
@@ -24,7 +38,7 @@ export default function SurveySelect({onNext, value, update, note, updateNote, d
             <div
               key={i}
               onClick={() => setSelectValue(item)}
-              className={`w-36 px-4 py-3 text-sm rounded-full border shadow-lg text-center cursor-pointer transition-all transform duration-300
+              className={`w-36 px-4 py-3 text-sm rounded-full border shadow-lg text-center cursor-pointer 
                 ${
                   isSelect
                     ? "bg-blue-600 text-white border-blue-400 hover:bg-blue-500 scale-105"

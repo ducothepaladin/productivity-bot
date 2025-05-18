@@ -6,6 +6,7 @@ import cookiePhaser from "cookie-parser";
 
 import authRouter from "./routes/authRoutes.js";
 import personalityRouter from "./routes/personalityRoutes.js";
+import taskRouter from "./routes/taskRoutes.js";
 
 
 const app = express();
@@ -25,6 +26,7 @@ app.use(cookiePhaser());
 //route
 app.use("/api/auth", authRouter);
 app.use("/api/personality", personalityRouter);
+app.use("/api/task", taskRouter);
 
 
 connectDb(dbUrl).then(() => {

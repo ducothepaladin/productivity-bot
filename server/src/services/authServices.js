@@ -33,7 +33,7 @@ export const refreshService = async (refreshToken) => {
   let userId;
   try {
     const decoded = verifyRefreshToken(refreshToken);
-    userId = decoded.id;
+    userId = decoded._id;
   } catch (err) {
     throw new Error("Invalid or expired refresh token");
   }

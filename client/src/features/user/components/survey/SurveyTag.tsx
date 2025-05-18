@@ -1,12 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import NextSurveyButton from "./NextSurveyButton";
 import type { SurveyComponentProps } from "@/type/Survey";
 
 export default function SurveyTag({onNext, note, update, updateNote, dataKey, current}:SurveyComponentProps) {
-    const [tags, setTags] = useState<string[]>(current.value? [...current.value]: []);
+    const [tags, setTags] = useState<string[]>([]);
     const [inputValue, setInputValue] = useState("");
+
+
+    useEffect(() => {
+        if(current && Object.keys(current).length > 0 && Array.isArray(current.value)) {
+          setTags([...current.value])
+        }
+      },[current])
 
     const handleAddTag = () => {
         if (inputValue.trim() && !tags.includes(inputValue.trim())) {

@@ -38,8 +38,8 @@ export type SurveyResult = {
   preferredTaskType: NoteField<string[]>;
   dislikedTaskType: NoteField<string[]>;
   toolsUsed: NoteField<string[]>;
-  shortTermGoals: NoteField<string[]>;
-  longTermGoals: NoteField<string[]>;
+  shortTermGoals: {value: string};
+  longTermGoals: {value: string};
 
   // Behavioral signals
   stressTolerance: NoteField<string>;
@@ -52,7 +52,7 @@ export type SurveyResult = {
 
   // Summary
   tags?: string[];
-  insight?: string;
+  insight?: {value: string};
 };
 
 
