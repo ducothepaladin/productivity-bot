@@ -1,4 +1,5 @@
 import API from "@/lib/api/apiConfig"
+import type { TaskDemo } from "@/type/Task";
 
 
 export const generateDemoTasks = async(scheduleBrief: {scheduleText: string}) => {
@@ -10,4 +11,15 @@ export const generateDemoTasks = async(scheduleBrief: {scheduleText: string}) =>
         throw err;
     }
 
+}
+
+
+export const confirmGenerateTask = async(task: TaskDemo) => {
+    try {
+        const response = await API.post("/task/confirm", {demo: task});
+        return response.data;
+    } catch (err) {
+        console.log("Error confirm", err);
+        throw err;
+    }
 }

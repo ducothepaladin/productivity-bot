@@ -10,10 +10,15 @@ const emotionTrackSchema = new Schema({
 const reviewSchema = new Schema({
   rating: { type: Number, min: 1, max: 5 },
   reflection: { type: String },
-}, { _id: false })
+}, { _id: false });
+
+const stepSchema = new Schema({
+  step: { type: String },
+  done: { type: Boolean}
+}, {_id: false})
 
 const taskSchema = new Schema({
-  userId: { type: String, required: true },
+  user_id: { type: String, required: true },
 
   title: { type: String, required: true },
   description: { type: String, required: true },
@@ -23,8 +28,8 @@ const taskSchema = new Schema({
   emotion: emotionTrackSchema,
   emotionSummary: { type: String, enum: ['positive', 'neutral', 'negative'], default: 'neutral' },
 
-  end_note: { type: String, required: true },
-  task_steps: { type: [String] },
+  end_note: { type: String },
+  task_steps: [stepSchema],
   status: {
     type: String,
     enum: ['pending', 'in_progress', 'completed', 'skipped', 'failed'],
@@ -32,7 +37,7 @@ const taskSchema = new Schema({
   },
 
   review: reviewSchema,
-  difficultyScore: { type: Number, min: 1, max: 10 },
+  difficultyScore: { type: Number, min: 1, max: 10, required: true },
   task_type: { type: String },
   relatedTo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }],
 

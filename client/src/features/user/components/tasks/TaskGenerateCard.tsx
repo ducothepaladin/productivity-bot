@@ -21,11 +21,7 @@ export default function TaskGenerateCard({ task, click }: { task: TaskDemo, clic
         <p className="text-xs text-muted-foreground mb-1">
           Difficulty:{" "}
           <Badge variant="secondary">
-            {Number(task.difficultyScore) > 7
-              ? "Hard"
-              : Number(task.difficultyScore) < 4
-              ? "Easy"
-              : "Normal"}
+            {task.difficultyScore}/10
           </Badge>
         </p>
         <p className="text-xs text-muted-foreground">
