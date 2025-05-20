@@ -19,6 +19,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import type { TaskDemo } from "@/type/Task";
+import useConfirmGenerateTask from "../../hooks/useConfirmGenerateTask";
+import useTaskStore from "@/store/taskStore";
 
 const schema = z.object({
   title: z.string().min(1),
@@ -44,14 +46,20 @@ export default function DemoTaskDetail({ task }: { task: TaskDemo }) {
   const start = format(new Date(task.start_time), "hh:mm a");
   const end = format(new Date(task.end_time), "hh:mm a");
 
+  const { mutate } = useConfirmGenerateTask();
+  const { deleteDemoTask, updateDemoTask } = useTaskStore();
+
   const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       title: task.title,
       description: task.description,
-      start_time: format(new Date(task.start_time), "HH:mm"),
-      end_time: format(new Date(task.end_time), "HH:mm"),
-      task_steps: task.task_steps.map((step) => ({ step })),
+      start_time: task.start_time,
+      end_time: task.end_time,
+      task_steps: task.task_steps.map((step) => ({
+        step: step.step,
+        done: step.done,
+      })),
     },
   });
 
@@ -61,8 +69,17 @@ export default function DemoTaskDetail({ task }: { task: TaskDemo }) {
     name: "task_steps",
   });
 
-  const onSubmit = (data: any) => {
-    console.log("Updated Task", data);
+  const onSubmit = () => {
+    mutate(task);
+    setIsEdit(false);
+  };
+
+  const handleDelete = () => {
+    deleteDemoTask(task);
+  };
+
+  const handleSaveChanges = (data: any) => {
+    updateDemoTask({ ...task, ...data });
     setIsEdit(false);
   };
 
@@ -71,7 +88,8 @@ export default function DemoTaskDetail({ task }: { task: TaskDemo }) {
       <div className="p-6 border rounded-3xl shadow-xl bg-white space-y-6 max-w-2xl mx-auto">
         <div className="flex items-center justify-between">
           <Badge className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">
-            {task.demo_id}<TagIcon size={16} className="ml-1" />
+            {task.demo_id}
+            <TagIcon size={16} className="ml-1" />
           </Badge>
           <Button
             onClick={() => setIsEdit((prev) => !prev)}
@@ -82,7 +100,7 @@ export default function DemoTaskDetail({ task }: { task: TaskDemo }) {
           </Button>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(handleSaveChanges)} className="space-y-5">
           {isEdit ? (
             <>
               <Input
@@ -159,7 +177,7 @@ export default function DemoTaskDetail({ task }: { task: TaskDemo }) {
                 <p className="font-semibold text-gray-700">Steps</p>
                 {task.task_steps.map((step, idx) => (
                   <p key={idx} className="text-sm text-gray-600">
-                    {step}
+                    {step.step}
                   </p>
                 ))}
               </div>
@@ -172,10 +190,15 @@ export default function DemoTaskDetail({ task }: { task: TaskDemo }) {
             </Button>
           ) : (
             <div className="grid grid-cols-2 gap-3 pt-3">
-              <Button variant="outline" className="gap-1">
+              <Button
+                type="button"
+                onClick={handleDelete}
+                variant="outline"
+                className="gap-1"
+              >
                 <Trash2 size={16} /> Delete
               </Button>
-              <Button className="gap-1">
+              <Button type="button" onClick={onSubmit} className="gap-1">
                 <CheckCircle2 size={16} /> Confirm
               </Button>
             </div>

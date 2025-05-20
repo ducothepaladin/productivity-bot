@@ -1,4 +1,5 @@
 import Personality from "../model/Personality.js";
+import Task from "../model/Tasks.js";
 import { generateId } from "../util/common.js";
 import { generate } from "./aiServices.js";
 
@@ -33,8 +34,8 @@ Each task must reflect:
     "description": "Plan priorities for the day.",
     "start_time": "2025-05-15T08:00:00",
     "end_time": "2025-05-15T08:30:00",
-    "task_steps": ["Review calendar", "Write down goals", "Set intention"],
-    "difficultyScore": 2,
+    "task_steps": [{"step": "Review calendar", "done": "false"}, {"step": "Write down goals", "done": "false"},{"step": "Set intention", "done": "false"}],
+    "difficultyScore": 2, //1 to 10
     "task_type": "routine"
   },
   ...
@@ -64,3 +65,14 @@ Generate a full day's schedule considering both inputs. Avoid 'avoidTimeSlots'. 
 
   return demoTasks;
 };
+
+
+
+export const confirmDemoTaskService = async (demo, userId) => {
+  
+  const {demo_id, ...rest} = demo;
+  const task = {...rest, user_id: userId, emotion: {count: rest.task_steps.length, value: []}};
+
+  const newTask = await Task.create(task);
+  return newTask;
+}

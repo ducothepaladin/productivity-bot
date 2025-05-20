@@ -11,7 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 export default function TaskGenerateSection() {
 
   const {demoTasks} = useTaskStore();
-  const {mutate} = useGenerateDemoTasks();
+  const {mutate, isPending} = useGenerateDemoTasks();
 
   const [index, setIndex] = useState<number>(0);
   const [task, setTask] = useState<TaskDemo>(demoTasks[0]);
@@ -19,12 +19,16 @@ export default function TaskGenerateSection() {
 
   useEffect(() => {
     setTask(demoTasks[index]);
-  },[index, demoTasks])
+  },[index, demoTasks]);
+
+  if(isPending) {
+    return <div>Loading..</div>
+  }
 
 
 
   return (
-    <section className="mt-6 px-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <section className="mt-6 px-6 relative grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="flex flex-col gap-6">
         <TaskGenerateInput generate={mutate} />
         <div className="border rounded-3xl shadow-md p-5 bg-white space-y-4">
@@ -40,7 +44,7 @@ export default function TaskGenerateSection() {
             <ScrollArea className="h-[22rem]">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {demoTasks.map((task, index) => (
-                <TaskGenerateCard click={() => setIndex(index)} key={index} task={task} />
+                <TaskGenerateCard click={() => setIndex(index?? 0)} key={index} task={task} />
               ))}
             </div>
             </ScrollArea>

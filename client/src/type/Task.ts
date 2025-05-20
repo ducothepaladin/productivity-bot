@@ -4,7 +4,7 @@ export type TaskDemo = {
   description: string;
   start_time: string;
   end_time: string;
-  task_steps: string[];
+  task_steps: {step: string, done: boolean}[];
   difficultyScore: number;
   task_type: string;
 };
