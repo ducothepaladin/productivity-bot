@@ -16,7 +16,7 @@ export default function TaskGenerateCard({
     <Card
       onClick={click}
       className={`hover:bg-gray-50 cursor-default transition-all ${
-        isSelected && "bg-neutral-700 text-white hover:bg-neutral-700"
+        isSelected && "bg-blue-100 hover:bg-blue-100"
       }`}
     >
       <CardHeader>

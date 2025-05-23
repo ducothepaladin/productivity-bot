@@ -2,10 +2,9 @@ import ProtectedRoute from "@/components/common/ProtectedRoute";
 import SurveyCheckRoute from "@/components/common/SurveyCheckRoute";
 import DashBoardPage from "@/features/user/pages/DashBoardPage";
 import SurveyPage from "@/features/user/pages/SurveyPage";
-import TaskDetailPage from "@/features/user/pages/TaskDetailPage";
-import TaskGeneratePage from "@/features/user/pages/TaskGeneratePage";
-import TasksPage from "@/features/user/pages/TasksPage";
 import UserLayout from "@/layouts/UserLayout";
+
+import taskRoute from "./taskRoute";
 
 const userRoute = [
   {
@@ -22,18 +21,7 @@ const userRoute = [
         index: true,
         element: <DashBoardPage />,
       },
-      {
-        path: "tasks",
-        element: <TasksPage />,
-      },
-      {
-        path: "tasks/generate",
-        element: <TaskGeneratePage />,
-      },
-      {
-        path: "tasks/detail/:id",
-        element: <TaskDetailPage />
-      }
+      ...taskRoute,
     ],
   },
   {

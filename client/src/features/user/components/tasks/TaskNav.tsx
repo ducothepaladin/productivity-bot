@@ -10,11 +10,13 @@ export default function TaskNav() {
         <Calendar1 />
       </h1>
       <div className="flex space-x-3 justify-between">
+        <Link to="create">
         <Button className="bg-white border text-black hover:bg-white">
           <Plus />
           <span>Add New Task</span>
         </Button>
-        <Link to="/user/tasks/generate">
+        </Link>
+        <Link to="generate">
         <Button className="bg-blue-500 hover:bg-blue-400">
           <Sparkles />
           <span>AI Generate</span>
