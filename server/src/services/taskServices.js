@@ -102,3 +102,8 @@ export const updateStepService = async (id, index, value) => {
     [`task_steps.${index}.done`] : value
   }})
 }
+
+
+export const deleteTaskByIdService = async (id) => {
+  await Task.findByIdAndDelete(id);
+}

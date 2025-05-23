@@ -43,3 +43,13 @@ export const getTaskById = async (id: string) => {
     throw err;
   }
 }
+
+export const deleteTaskById = async (id: string) => {
+  try {
+    const response = await API.delete(`/task/delete/${id}`);
+    return response.data;
+  } catch (err) {
+    console.log("Error delete", err);
+    throw err;
+  }
+}

@@ -18,19 +18,16 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { format } from "date-fns";
 import { getDifficultyColor, getDifficultyLabel } from "@/lib/util/helper";
-import { useNavigate } from "react-router-dom";
+import useDeleteTask from "../../hooks/useDeleteTask";
 
 export default function TaskDetail({ task }: { task: TaskType }) {
+  const today = new Date().toISOString().split("T")[0];
+
   const progress = Math.floor(
     (task.task_steps.filter((step) => step.done).length / 10) * 100
   );
-  const navigate = useNavigate();
 
-  if(!task) {
-    navigate(-1);
-  }
-
-
+  const { mutate } = useDeleteTask();
 
   return (
     <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
@@ -110,7 +107,12 @@ export default function TaskDetail({ task }: { task: TaskType }) {
           </ul>
         </div>
         <div className="grid grid-cols-3 gap-4 pt-2">
-          <Button variant="destructive" className="flex items-center gap-2">
+          <Button
+            type="button"
+            onClick={() => mutate({ id: task._id, dateKey: today })}
+            variant="destructive"
+            className="flex items-center gap-2"
+          >
             <Trash2 className="w-4 h-4" />
             Delete
           </Button>
