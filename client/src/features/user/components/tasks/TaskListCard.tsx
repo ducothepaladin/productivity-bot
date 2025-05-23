@@ -1,6 +1,8 @@
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -8,36 +10,26 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
+import type { TaskType } from "@/type/Task";
 import { format } from "date-fns";
 import { Calendar, Flame, Clock, ListTodo } from "lucide-react";
+import { Link } from "react-router-dom";
 
-type Task = {
-  title: string;
-  description: string;
-  start_time: string;
-  end_time: string;
-  task_steps: string[];
-  difficultyScore: number;
-  task_type: string;
-};
-
-export default function TaskListCard({task}: {task: Task}) {
+export default function TaskListCard({ task }: { task: TaskType }) {
   const start = format(new Date(task.start_time), "hh:mm a");
   const end = format(new Date(task.end_time), "hh:mm a");
   const date = format(new Date(task.start_time), "PP");
 
-  const progress = Math.floor((task.task_steps.length / 10) * 100);
+  const progress = Math.floor(
+    (task.task_steps.filter((step) => step.done).length / 10) * 100
+  );
 
   return (
     <Card className="rounded-xl border shadow-sm">
       <CardHeader className="h-32 flex flex-col justify-start">
         <div className="flex w-full justify-between items-center mb-2">
-          <span className="text-xs px-2 py-1 bg-muted rounded-md text-muted-foreground font-mono">
-            T-123
-          </span>
           <Badge variant="outline" className="bg-yellow-200 text-yellow-900">
-            Pending
+            {task.status}
           </Badge>
         </div>
         <CardTitle className="text-base font-semibold flex items-center space-x-2 leading-snug">
@@ -69,18 +61,21 @@ export default function TaskListCard({task}: {task: Task}) {
           <ListTodo className="h-4 w-4 text-muted-foreground" />
           <span>{task.task_steps.length} Steps</span>
         </div>
+        <div className="flex flex-col col-span-2 gap-2 items-start">
+          <div className="w-full flex justify-between items-center">
+            <span className="text-xs text-muted-foreground">Progress</span>
+            <span className="text-xs text-muted-foreground">{progress}</span>
+          </div>
+          <Progress className="w-full [&>*]:bg-blue-500" value={progress} />
+        </div>
       </CardContent>
 
-      <Separator />
-
-      <CardFooter className="flex flex-col gap-2 items-start">
-        <div className="w-full flex justify-between items-center">
-          <span className="text-xs text-muted-foreground">Progress</span>
-          <span className="text-xs text-muted-foreground">
-            {progress / task.task_steps.length}
-          </span>
-        </div>
-        <Progress className="w-full [&>*]:bg-blue-500" value={progress} />
+      <CardFooter>
+        <CardAction className="w-full">
+          <Link to={`detail/${task._id}`}>
+            <Button className="w-full">View</Button>
+          </Link>
+        </CardAction>
       </CardFooter>
     </Card>
   );

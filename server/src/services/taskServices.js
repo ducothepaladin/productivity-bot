@@ -66,13 +66,39 @@ Generate a full day's schedule considering both inputs. Avoid 'avoidTimeSlots'. 
   return demoTasks;
 };
 
-
-
 export const confirmDemoTaskService = async (demo, userId) => {
-  
-  const {demo_id, ...rest} = demo;
-  const task = {...rest, user_id: userId, emotion: {count: rest.task_steps.length, value: []}};
+  const { demo_id, ...rest } = demo;
+  const task = {
+    ...rest,
+    user_id: userId,
+    emotion: { count: rest.task_steps.length, value: [] },
+  };
 
   const newTask = await Task.create(task);
   return newTask;
+};
+
+export const getTasksByDateService = async (dateString, userId) => {
+  const date = new Date(dateString);
+  const start = new Date(date.setHours(0, 0, 0, 0));
+  const end = new Date(date.setHours(23, 59, 59, 999));
+
+  const task = await Task.find({
+    user_id: userId,
+    createdAt: { $gte: start, $lte: end },
+  });
+
+  return task;
+};
+
+
+export const getTaskByIdService = async (id) => {
+  const task = await Task.findById(id);
+  return task;
+}
+
+export const updateStepService = async (id, index, value) => {
+  await Task.updateOne({_id: id}, {$set: {
+    [`task_steps.${index}.done`] : value
+  }})
 }

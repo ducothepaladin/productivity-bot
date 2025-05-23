@@ -36,7 +36,7 @@ export function UserSideBar({
 }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
-      <div className="bg-white border h-full rounded-lg ">
+      <div className="bg-white shadow-sm h-full rounded-2xl ">
         <SidebarHeader>
           <SidebarMenu>
             <SidebarMenuItem>

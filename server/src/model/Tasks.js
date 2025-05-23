@@ -8,7 +8,7 @@ const emotionTrackSchema = new Schema({
 }, { _id: false })//emotional rating during task
 
 const reviewSchema = new Schema({
-  rating: { type: Number, min: 1, max: 5 },
+  rating: { type: Number, min: 1, max: 5, default: 1 },
   reflection: { type: String },
 }, { _id: false });
 
@@ -18,7 +18,7 @@ const stepSchema = new Schema({
 }, {_id: false})
 
 const taskSchema = new Schema({
-  user_id: { type: String, required: true },
+  user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 
   title: { type: String, required: true },
   description: { type: String, required: true },
