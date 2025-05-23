@@ -15,7 +15,7 @@ const useTaskStore = create<TaskStore>((set, get) => ({
   },
   deleteDemoTask: (task: TaskDemo) => {
     set({
-      demoTasks: get().demoTasks.filter((item: TaskDemo) => item !== task),
+      demoTasks: get().demoTasks.filter((item: TaskDemo) => item.demo_id !== task.demo_id),
     });
   },
   updateDemoTask: (task: TaskDemo) => {

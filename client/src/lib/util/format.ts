@@ -1,3 +1,5 @@
+import {format} from "date-fns"
+
 export function formatTo12HourTime(time24: string): string {
   if (!time24) return "";
 
@@ -11,10 +13,7 @@ export function formatTo12HourTime(time24: string): string {
 }
 
 
-export function isValid24Time(time: string): boolean {
-  return /^([01]\d|2[0-3]):[0-5]\d$/.test(time);
-}
-
-export function isValidAMPMTime(time: string): boolean {
-  return /^(0[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/i.test(time);
+export function formatAMPM(time: string): string {
+  const result = format(new Date(time), "hh:mm a")
+  return result;
 }

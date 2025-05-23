@@ -2,7 +2,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { format } from "date-fns";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -63,11 +63,24 @@ export default function DemoTaskDetail({ task }: { task: TaskDemo }) {
     },
   });
 
-  const { register, control, handleSubmit } = form;
+  const { register, control, handleSubmit, reset } = form;
   const { fields, append, remove } = useFieldArray({
     control,
     name: "task_steps",
   });
+
+useEffect(() => {
+  reset({
+    title: task.title,
+    description: task.description,
+    start_time: task.start_time,
+    end_time: task.end_time,
+    task_steps: task.task_steps.map((step) => ({
+      step: step.step,
+      done: step.done,
+    })),
+  });
+}, [task, reset]);
 
   const onSubmit = () => {
     mutate(task);
